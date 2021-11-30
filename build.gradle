@@ -63,20 +63,17 @@ tasks.withType(GroovyCompile) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact("build/libs/finance-$version" + ".jar") {
-                extension 'jar'
-            }
+            artifactId 'spring-session'
+            groupId 'com.dc'
         }
     }
-}
-
-nexusPublishing {
     repositories {
-        tzNexus {
-            nexusUrl = uri("http://81.69.244.124:8081/nexus/staging/")
-            snapshotRepositoryUrl = uri("https://81.69.244.124:8081/nexus/snapshots/")
-            username = "admin" // defaults to project.properties["myNexusUsername"]
-            password = "Juz!#202!" // defaults to project.properties["myNexusPassword"]
+        maven {
+            credentials {
+                username 'dev'
+                password 'Juz!#202!'
+            }
+            url "http://81.69.244.124:8081/repository/tzspace-release/"
         }
     }
 }
