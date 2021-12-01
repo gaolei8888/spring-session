@@ -16,11 +16,11 @@ import utils.SpringSessionUtils
 @Slf4j
 class SpringSessionGrailsPlugin extends Plugin {
 
-    def version = "2.0.1-ub"
+    def version = "2.0.2"
     def grailsVersion = "3.3.0 > *"
     def title = "Spring Session Grails Plugin"
     def author = "Jitendra Singh"
-    def authorEmail = "jeet.mp3@gmail.com"
+    def authorEmail = "gaolei8888@yahoo.com"
     def description = 'Provides support for SpringSession project'
     def documentation = "https://github.com/jeetmp3/spring-session"
     def license = "APACHE"

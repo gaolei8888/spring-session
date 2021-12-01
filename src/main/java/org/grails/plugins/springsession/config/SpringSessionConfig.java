@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.session.ExpiringSession;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.SessionRepositoryFilter;
 import redis.clients.jedis.JedisPoolConfig;
