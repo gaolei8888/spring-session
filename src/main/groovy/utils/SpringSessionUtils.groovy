@@ -1,5 +1,6 @@
 package utils
 
+import grails.compiler.GrailsCompileStatic
 import grails.core.GrailsApplication
 import grails.util.Environment
 import org.springframework.core.env.MapPropertySource
@@ -8,6 +9,7 @@ import org.springframework.core.env.PropertySource
 
 import static org.springframework.util.ObjectUtils.isEmpty
 
+@GrailsCompileStatic
 class SpringSessionUtils {
 
     public static GrailsApplication application
@@ -37,13 +39,14 @@ class SpringSessionUtils {
         ConfigObject mergedConfig = new ConfigObject()
         mergedConfig.springsession = config
         PropertySource propertySource = new MapPropertySource('SessionConfig', mergedConfig)
-        MutablePropertySources propertySources = application.mainContext.environment.propertySources
+        MutablePropertySources propertySources =
+                application.mainContext.environment['propertySources'] as MutablePropertySources
         propertySources.addFirst(propertySource)
         application.config.springsession = config
         if(!config.active){
             // set the store type to none to disable session auto-configuration
             PropertySource systemProperties = propertySources.get('systemProperties')
-            systemProperties.source.put('spring.session.store-type', 'none')
+            (systemProperties.source as Properties).put('spring.session.store-type', 'none')
         }
     }
 }

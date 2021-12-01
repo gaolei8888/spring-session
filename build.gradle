@@ -16,12 +16,30 @@ apply plugin: "org.grails.grails-plugin"
 apply plugin: 'maven-publish'
 apply plugin: "io.github.gradle-nexus.publish-plugin"
 
+Integer buildNumber = 0
+Properties versionProps = new Properties()
+File versionPropsFile = file('version.properties')
+
+ext {
+}
+
 repositories {
     maven { url "https://repo.grails.org/grails/core" }
 }
 
 configurations {
     developmentOnly
+
+    doFirst {
+        if (versionPropsFile.canRead()) {
+            versionProps.load(new FileInputStream(versionPropsFile))
+            buildNumber = versionProps['buildNumber'].toInteger()
+            version = "$version.$buildNumber"
+        } else {
+            throw new FileNotFoundException("Could not read version.properties!")
+        }
+    }
+
     runtimeClasspath {
         extendsFrom developmentOnly
     }
@@ -84,4 +102,16 @@ publishing {
             url "http://nexus.tzspace.net:8081/repository/tzspace-release/"
         }
     }
+}
+
+tasks.register('writeBuildNumber') {
+    doLast {
+        versionProps.setProperty('buildNumber', ((buildNumber ?: 0) + 1).toString())
+        versionProps.store(new FileOutputStream(versionPropsFile.getAbsolutePath()), '')
+    }
+}
+
+tasks.named('build') { dependsOn('writeBuildNumber') }
+tasks.named('publish') {
+    dependsOn('writeBuildNumber')
 }
