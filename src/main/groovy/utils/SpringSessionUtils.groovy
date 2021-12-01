@@ -9,7 +9,6 @@ import org.springframework.core.env.PropertySource
 
 import static org.springframework.util.ObjectUtils.isEmpty
 
-@GrailsCompileStatic
 class SpringSessionUtils {
 
     public static GrailsApplication application
