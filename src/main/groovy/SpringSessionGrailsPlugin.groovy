@@ -1,3 +1,4 @@
+import grails.compiler.GrailsCompileStatic
 import grails.plugins.Plugin
 import groovy.util.logging.Slf4j
 import org.grails.plugins.springsession.config.SpringSessionConfig
@@ -8,8 +9,6 @@ import org.springframework.data.redis.connection.RedisNode
 import org.springframework.data.redis.connection.RedisSentinelConfiguration
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.session.web.http.CookieHttpSessionStrategy
-import org.springframework.session.web.http.HeaderHttpSessionStrategy
 import redis.clients.jedis.JedisShardInfo
 import utils.SpringSessionUtils
 
@@ -84,18 +83,18 @@ class SpringSessionGrailsPlugin extends Plugin {
                 bean.initMethod = "afterPropertiesSet"
             }
 
-            String defaultStrategy = conf.strategy.defaultStrategy
-            if (defaultStrategy == "HEADER") {
-                httpSessionStrategy(HeaderHttpSessionStrategy) {
-                    headerName = conf.strategy.httpHeader.headerName
-                }
-            } else {
-                httpSessionStrategy(CookieHttpSessionStrategy) {
-                    cookieSerializer {
-                        cookieName = conf.strategy.cookie.name
-                    }
-                }
-            }
+//            String defaultStrategy = conf.strategy.defaultStrategy
+//            if (defaultStrategy == "HEADER") {
+//                httpSessionStrategy(HeaderHttpSessionStrategy) {
+//                    headerName = conf.strategy.httpHeader.headerName
+//                }
+//            } else {
+//                httpSessionStrategy(CookieHttpSessionStrategy) {
+//                    cookieSerializer {
+//                        cookieName = conf.strategy.cookie.name
+//                    }
+//                }
+//            }
 
             configureRedisAction(NoOpConfigureRedisAction)
             httpSessionSynchronizer(HttpSessionSynchronizer) {
