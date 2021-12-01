@@ -8,7 +8,7 @@ buildscript {
 }
 
 version "2.0.2"
-group "org.grails.plugins"
+group "com.dc"
 
 apply plugin: "eclipse"
 apply plugin: "idea"
@@ -54,6 +54,11 @@ dependencies {
     implementation 'redis.clients:jedis:3.7.0'
 }
 
+jar {
+    enabled = true
+    archiveClassifier = '' //use empty string
+}
+
 tasks.withType(GroovyCompile) {
     configure(groovyOptions) {
         forkOptions.jvmArgs = ['-Xmx1024m']
@@ -65,6 +70,9 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId 'spring-session'
             groupId 'com.dc'
+            version version
+
+            from components.java
         }
     }
     repositories {
@@ -73,7 +81,7 @@ publishing {
                 username 'dev'
                 password 'Juz!#202!'
             }
-            url "http://81.69.244.124:8081/repository/tzspace-release/"
+            url "http://nexus.tzspace.net:8081/repository/tzspace-release/"
         }
     }
 }
